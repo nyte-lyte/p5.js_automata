@@ -8,55 +8,31 @@ function setup() {
   createCanvas(600, 600);
   colorMode(HSB, 360, 100, 100);
 
-  // Select dataset 5 for testing
-  let dataSet5 = healthDataSets[5]; // Dataset 5 is index 5 (0-based index)
-
-  console.log("Testing Dataset 5:", dataSet5);
-
-  Object.entries(dataSet5.ecg).forEach(([key, value]) => {
-    if (!minMaxValues[key]) {
-      console.warn(`Key ${key} is missing in minMaxValues.`);
-    } else {
-      let min = minMaxValues[key].min;
-      let max = minMaxValues[key].max;
-      console.log(
-        `ECG Key: ${key}, Value: ${value}, Min: ${min}, Max: ${max}, Normalized: ${normalize(
-          value,
-          min,
-          max
-        )}`
-      );
-    }
-  });
-
-  Object.entries(dataSet5.labs).forEach(([key, value]) => {
-    if (!minMaxValues[key]) {
-      console.warn(`Key ${key} is missing in minMaxValues.`);
-    } else {
-      let min = minMaxValues[key].min;
-      let max = minMaxValues[key].max;
-      console.log(
-        `Lab Key: ${key}, Value: ${value}, Min: ${min}, Max: ${max}, Normalized: ${normalize(
-          value,
-          min,
-          max
-        )}`
-      );
-    }
-  });
-
   cols = floor(width / resolution);
   rows = floor(height / resolution);
 
   // Select a dataset
   selectedDataSet = healthDataSets[5]; // Pick one dataset
   console.log(`Using dataset for date: ${selectedDataSet.date}`);
+  console.log('Decay Rate for Dataset 5:', selectedDataSet.decayRate);
 
   selectedDataSet.palette = validatePalette(
     generateOrganicPalette(selectedDataSet)
   );
   if (!selectedDataSet.palette) {
     console.error("Failed to assign palette to dataset:", selectedDataSet);
+  }
+
+  if (selectedDataSet === healthDataSets[5]) {
+    // Check for dataset 5
+    selectedDataSet.palette = {
+      start: color(60, 100, 100), // Bright yellow
+      end: color(0, 100, 100), // Bright red
+    };
+    console.log(
+      "Forced bright palette for Dataset 5:",
+      selectedDataSet.palette
+    ); // Log the palette
   }
 
   // Initialize the grid
@@ -69,11 +45,6 @@ function draw() {
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       let cell = grid[i][j];
-
-      //if (!cell) {
-       // console.warn('Skipping null cell at (${i}, ${j})');
-       // continue;
-     // }
 
       if (cell.health > 0) {
         // Calculate blended color based on health

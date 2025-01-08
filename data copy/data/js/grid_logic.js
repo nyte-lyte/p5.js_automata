@@ -30,6 +30,7 @@ function initializeGrid(cols, rows, resolution, selectedDataSet) {
 
   // Calculate health index for the dataset
   let healthIndex = calculateHealthIndex(selectedDataSet);
+  console.log('Health Index for Dataset 5:', calculateHealthIndex(healthDataSets[5]));
 
   // Initialize grid with groups
   for (let i = 0; i < cols; i++) {
