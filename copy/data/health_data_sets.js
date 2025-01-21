@@ -561,13 +561,11 @@ healthDataSets.forEach((dataSet) => {
   console.log("Date: ${dataSet.date}, Health Index: ${dataSet.healthIndex}");
 });
 
-
-
 let minMaxValues = {
   ventRate: { min: Infinity, max: -Infinity },
   prInterval: { min: Infinity, max: -Infinity },
   qrsInterval: { min: Infinity, max: -Infinity },
-  qtInterval: { min: Infinity, max: -Infinity},
+  qtInterval: { min: Infinity, max: -Infinity },
   qtcInterval: { min: Infinity, max: -Infinity },
   pAxis: { min: Infinity, max: -Infinity },
   rAxis: { min: Infinity, max: -Infinity },

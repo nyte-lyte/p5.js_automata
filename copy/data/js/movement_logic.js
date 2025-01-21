@@ -62,7 +62,6 @@ function updateMovement(cell) {
   cell.y = (cell.y + height) % height;
 }
 
-
 // Assign initial movement properties to the grid
 function assignMovementToGrid(grid, selectedDataSet) {
   for (let i = 0; i < grid.length; i++) {
